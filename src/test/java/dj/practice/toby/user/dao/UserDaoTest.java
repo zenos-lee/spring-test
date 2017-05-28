@@ -1,17 +1,19 @@
-package dj.practice.toby.user;
+package dj.practice.toby.user.dao;
 
-import dj.practice.toby.user.dao.DUserDao;
-import dj.practice.toby.user.dao.UserDao;
 import dj.practice.toby.user.domain.User;
 
 import java.sql.SQLException;
 
+import static org.junit.Assert.*;
+
 /**
- * Created by Dongjoon on 2017. 5. 26..
+ * Created by Dongjoon on 2017. 5. 28..
  */
-public class Main {
+public class UserDaoTest {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserDao dao = new DUserDao();
+
+        ConnectionMaker connectionMaker = new DConnectionMaker();
+        UserDao dao = new UserDao(connectionMaker);
 
         User user = new User();
         user.setId("whiteship");
@@ -26,5 +28,7 @@ public class Main {
         System.out.println(user2.getName());
         System.out.println(user2.getPassword());
         System.out.println(user2.getId() + " 조회 성공");
+
     }
+
 }
