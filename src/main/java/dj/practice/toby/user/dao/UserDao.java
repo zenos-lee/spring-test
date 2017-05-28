@@ -7,12 +7,19 @@ import java.sql.*;
 /**
  * Created by Dongjoon on 2017. 5. 26..
  */
-public class UserDao {
+public abstract class UserDao {
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+//    {
+//        Class.forName("com.mysql.jdbc.Driver");
+//        Connection c  = DriverManager.getConnection(
+//                "jdbc:mysql://localhost:3306/spring", "root", null
+//        );
+//        return c;
+//    }
+
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection c  = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/spring", "root", null
-        );
+
+        Connection c = getConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "INSERT INTO users(id, name, password) VALUES (?, ?, ?)"
@@ -28,10 +35,7 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/spring", "root", null
-        );
+        Connection c = getConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "SELECT * FROM users WHERE id = ?"

@@ -1,5 +1,6 @@
 package dj.practice.toby.user;
 
+import dj.practice.toby.user.dao.DUserDao;
 import dj.practice.toby.user.dao.UserDao;
 import dj.practice.toby.user.domain.User;
 
@@ -10,14 +11,14 @@ import java.sql.SQLException;
  */
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserDao dao = new UserDao();
+        UserDao dao = new DUserDao();
 
         User user = new User();
         user.setId("whiteship");
         user.setName("백기선");
         user.setPassword("married");
 
-        dao.add(user);
+//        dao.add(user);
 
         System.out.println(user.getId() + " 등록 성공");
 
