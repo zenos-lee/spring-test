@@ -15,10 +15,6 @@ import static org.junit.Assert.*;
 public class UserDaoTest {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
-//        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-//
-//
-
         ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
         UserDao dao = context.getBean("userDao", UserDao.class);
 
@@ -27,7 +23,7 @@ public class UserDaoTest {
         user.setName("백기선");
         user.setPassword("married");
 
-//        dao.add(user);
+        dao.add(user);
 
         System.out.println(user.getId() + " 등록 성공");
 
@@ -36,7 +32,7 @@ public class UserDaoTest {
         System.out.println(user2.getPassword());
         System.out.println(user2.getId() + " 조회 성공");
 
-
+        dao.removeAll();
     }
 
 }
