@@ -1,6 +1,7 @@
 package dj.practice.toby.user.dao;
 
 import dj.practice.toby.user.domain.User;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -45,29 +46,48 @@ public class UserDao {
         ps.setString(1, id);
 
         ResultSet rs = ps.executeQuery();
-        rs.next();
-        User user = new User();
-        user.setId(rs.getString("id"));
-        user.setName(rs.getString("name"));
-        user.setPassword(rs.getString("password"));
+        User user = null;
+        if(rs.next()){
+            user = new User();
+            user.setId(rs.getString("id"));
+            user.setName(rs.getString("name"));
+            user.setPassword(rs.getString("password"));
+        }
 
         rs.close();
         ps.close();
         c.close();
 
+        if(user == null) throw new EmptyResultDataAccessException(1);
+
         return user;
     }
 
-    public void removeAll() throws ClassNotFoundException, SQLException {
+    public void deleteAll() throws ClassNotFoundException, SQLException {
         Connection c = dataSource.getConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "DELETE from users;"
         );
 
-        ps.execute();
+        ps.executeUpdate();
         ps.close();
         c.close();
     }
 
+    public int getCount() throws SQLException {
+        Connection c = dataSource.getConnection();
+
+        PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) from users");
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        int count = rs.getInt(1);
+        rs.close();
+        ps.close();
+        c.close();
+
+        return count;
+    }
 }

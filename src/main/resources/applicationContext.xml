@@ -5,7 +5,7 @@
     <bean id="connectionMaker" class="dj.practice.toby.user.dao.DConnectionMaker" />
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource" >
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/spring" />
+        <property name="url" value="jdbc:mysql://localhost:3306/spring?autoReconnect=true&amp;useSSL=false" />
         <property name="username" value="root"/>
     </bean>
     <bean id="userDao" class="dj.practice.toby.user.dao.UserDao">
