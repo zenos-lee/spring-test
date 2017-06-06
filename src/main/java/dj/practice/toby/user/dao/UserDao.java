@@ -12,15 +12,20 @@ import java.sql.*;
 public class UserDao {
     private DataSource dataSource;
 
+    private JdbcContext jdbcContext;
+
     public UserDao() {
     }
 
+
     public void setDataSource(DataSource dataSource){
+        this.jdbcContext = new JdbcContext();
+        this.jdbcContext.setDataSource(dataSource);
         this.dataSource = dataSource;
     }
 
     public void add(final User user) throws ClassNotFoundException, SQLException {
-        jdbcContextWithStatementStrategy(new StatementStrategy() {
+        this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
             @Override
             public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
                 PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values (?,?,?)");
@@ -60,14 +65,9 @@ public class UserDao {
     }
 
     public void deleteAll() throws ClassNotFoundException, SQLException {
-        jdbcContextWithStatementStrategy(new StatementStrategy() {
-            @Override
-            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-                PreparedStatement ps = c.prepareStatement("DELETE from users");
-                return ps;
-            }
-        });
+        this.jdbcContext.executeSql("DELETE from users");
     }
+
 
     public int getCount() throws SQLException {
         Connection c = null;
