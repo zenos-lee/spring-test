@@ -1,7 +1,5 @@
 package dj.practice.toby.user.dao;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.sql.DataSource;
@@ -12,10 +10,10 @@ import javax.sql.DataSource;
 //@Configuration
 public class DaoFactory {
 //    @Bean
-    public UserDao userDao() {
-        UserDao userDao = new UserDao();
-        userDao.setDataSource(dataSource());
-        return userDao;
+    public UserDaoJdbc userDao() {
+        UserDaoJdbc userDaoJdbc = new UserDaoJdbc();
+        userDaoJdbc.setDataSource(dataSource());
+        return userDaoJdbc;
     }
 
 //    @Bean
