@@ -13,14 +13,13 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <!--<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">-->
-        <!--<property name="host" value="mail.server.com"/>-->
-    <!--</bean>-->
-
     <bean id="mailSender" class="dj.practice.toby.user.service.DummyMailSender"/>
-    <bean id="userService" class="dj.practice.toby.user.service.UserService">
-        <property name="userDao" ref="userDao"/>
+    <bean id="userService" class="dj.practice.toby.user.service.UserServiceTx">
         <property name="transactionManager" ref="transactionManager"/>
+        <property name="userService" ref="userServiceImpl"/>
+    </bean>
+    <bean id="userServiceImpl" class="dj.practice.toby.user.service.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
         <property name="mailSender" ref="mailSender"/>
     </bean>
 </beans>
