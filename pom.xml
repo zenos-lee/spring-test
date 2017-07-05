@@ -42,13 +42,14 @@
 		</dependency>
 
 
-		<!-- AspectJ -->
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>	
-		
+			<artifactId>aspectjtools</artifactId>
+			<version>1.8.10</version>
+		</dependency>
+
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
