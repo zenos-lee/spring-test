@@ -21,16 +21,7 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*"  read-only="true"  />
-            <tx:method name="*"  />
-        </tx:attributes>
-    </tx:advice>
-    <aop:config>
-        <aop:advisor advice-ref="transactionAdvice" pointcut="bean(*Service)" />
-    </aop:config>
-
+    <tx:annotation-driven />
     <bean id="mailSender" class="dj.practice.toby.user.service.DummyMailSender"/>
     <bean id="userService" class="dj.practice.toby.user.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
