@@ -15,8 +15,21 @@
         <property name="url" value="jdbc:mysql://localhost:3306/testdb?autoReconnect=true&amp;useSSL=false" />
         <property name="username" value="root"/>
     </bean>
+    <bean id="sqlService" class="dj.practice.toby.user.sqlservice.SimpleSqlService" >
+        <property name="sqlMap">
+            <map>
+                <entry key="userAdd" value= "INSERT INTO users(id, name, password, level, login, recommend, email) VALUES (?,?,?,?,?,?,?)"/>
+                <entry key="userGet" value= "SELECT * FROM users WHERE id = ?"/>
+                <entry key="userGetAll" value= "SELECT * FROM users ORDER BY id"/>
+                <entry key="userDeleteAll" value= "DELETE from users"/>
+                <entry key="userGetCount" value= "SELECT count(*) FROM users"/>
+                <entry key="userUpdate" value= "UPDATE users SET name = ?, password = ?, level = ?, login = ?, recommend = ?, email = ? where id = ?"/>
+            </map>
+        </property>
+    </bean>
     <bean id="userDao" class="dj.practice.toby.user.dao.UserDaoJdbc">
         <property name="dataSource" ref="dataSource"/>
+        <property name="sqlService" ref="sqlService" />
     </bean>
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>

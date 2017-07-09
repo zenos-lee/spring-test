@@ -9,7 +9,8 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
+import java.util.Map;
+import dj.practice.toby.user.sqlservice.SqlService;
 /**
  * Created by Dongjoon on 2017. 5. 26..
  */
@@ -33,6 +34,12 @@ public class UserDaoJdbc implements UserDao{
     };
 
 
+    private SqlService sqlService;
+
+    public void setSqlService(SqlService sqlService) {
+        this.sqlService = sqlService;
+    }
+
     public UserDaoJdbc() {
     }
 
@@ -42,7 +49,7 @@ public class UserDaoJdbc implements UserDao{
     }
 
     public void add(final User user)  {
-        this.jdbcTemplate.update("INSERT INTO users(id, name, password, level, login, recommend, email) VALUES (?,?,?,?,?,?,?)",
+        this.jdbcTemplate.update(this.sqlService.getSql("userAdd"),
                 user.getId(),
                 user.getName(),
                 user.getPassword(),
@@ -54,23 +61,23 @@ public class UserDaoJdbc implements UserDao{
     }
 
     public User get(String id)  {
-        return this.jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?",
+        return this.jdbcTemplate.queryForObject(this.sqlService.getSql("userGet"),
                 new Object[]{id},
                 this.userMapper);
     }
 
     public void deleteAll() {
-       this.jdbcTemplate.update("DELETE from users");
+       this.jdbcTemplate.update(this.sqlService.getSql("userDeleteAll"));
     }
 
 
     public int getCount() {
-        return jdbcTemplate.queryForObject("SELECT count(*) FROM users", new Object[] {}, Integer.class);
+        return jdbcTemplate.queryForObject(this.sqlService.getSql("userGetCount"), new Object[] {}, Integer.class);
     }
 
     @Override
     public void update(User user) {
-        this.jdbcTemplate.update("UPDATE users SET name = ?, password = ?, level = ?, login = ?, recommend = ?, email = ? where id = ?",
+        this.jdbcTemplate.update(this.sqlService.getSql("userUpdate"),
                 user.getName(),
                 user.getPassword(),
                 user.getLevel().intValue(),
@@ -81,6 +88,6 @@ public class UserDaoJdbc implements UserDao{
     }
 
     public List<User> getAll() {
-        return this.jdbcTemplate.query("SELECT * FROM users ORDER BY id", this.userMapper);
+        return this.jdbcTemplate.query(this.sqlService.getSql("userGetAll"), this.userMapper);
     }
 }
