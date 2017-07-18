@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 ">
@@ -15,18 +18,15 @@
         <property name="url" value="jdbc:mysql://localhost:3306/testdb?autoReconnect=true&amp;useSSL=false" />
         <property name="username" value="root"/>
     </bean>
-    <bean id="sqlService" class="dj.practice.toby.user.sqlservice.SimpleSqlService" >
-        <property name="sqlMap">
-            <map>
-                <entry key="userAdd" value= "INSERT INTO users(id, name, password, level, login, recommend, email) VALUES (?,?,?,?,?,?,?)"/>
-                <entry key="userGet" value= "SELECT * FROM users WHERE id = ?"/>
-                <entry key="userGetAll" value= "SELECT * FROM users ORDER BY id"/>
-                <entry key="userDeleteAll" value= "DELETE from users"/>
-                <entry key="userGetCount" value= "SELECT count(*) FROM users"/>
-                <entry key="userUpdate" value= "UPDATE users SET name = ?, password = ?, level = ?, login = ?, recommend = ?, email = ? where id = ?"/>
-            </map>
-        </property>
+
+    <bean id="sqlReader" class="dj.practice.toby.user.sqlservice.JaxbXmlSqlReader">
+        <property name="sqlmapFile" value="/sqlmap.xml"/>
     </bean>
+
+    <bean id="sqlRegistry" class="dj.practice.toby.user.sqlservice.HashMapSqlRegistry"/>
+
+    <bean id="sqlService" class="dj.practice.toby.user.sqlservice.DefaultSqlService" />
+
     <bean id="userDao" class="dj.practice.toby.user.dao.UserDaoJdbc">
         <property name="dataSource" ref="dataSource"/>
         <property name="sqlService" ref="sqlService" />
@@ -35,6 +35,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
     <tx:annotation-driven />
+    <context:annotation-config/>
     <bean id="mailSender" class="dj.practice.toby.user.service.DummyMailSender"/>
     <bean id="userService" class="dj.practice.toby.user.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
