@@ -53,6 +53,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> <version>2.3.2</version> </dependency>
+
+		<dependency>
+			<groupId>com.springsource.org</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.9</version>
+		</dependency>
 
 
 

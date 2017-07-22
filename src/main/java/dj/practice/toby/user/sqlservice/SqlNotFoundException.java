@@ -7,4 +7,7 @@ public class SqlNotFoundException extends RuntimeException {
     public SqlNotFoundException(String msg){
         super(msg);
     }
+    public SqlNotFoundException(String msg, Exception e){
+        super(msg, e);
+    }
 }
