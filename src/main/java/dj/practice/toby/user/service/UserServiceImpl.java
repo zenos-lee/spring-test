@@ -3,8 +3,11 @@ package dj.practice.toby.user.service;
 import dj.practice.toby.user.dao.UserDao;
 import dj.practice.toby.user.domain.Level;
 import dj.practice.toby.user.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +18,11 @@ import java.util.List;
 /**
  * Created by Dongjoon on 2017. 6. 15..
  */
+@Service("userService")
 public class UserServiceImpl implements UserService {
+    @Autowired
     UserDao userDao;
+    @Autowired
     private MailSender mailSender;
     public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
     public static final int MIN_RECCOMEND_FOR_GOLD = 30;

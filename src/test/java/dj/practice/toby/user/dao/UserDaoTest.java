@@ -1,11 +1,13 @@
 package dj.practice.toby.user.dao;
 
+import dj.practice.toby.AppContext;
 import dj.practice.toby.user.domain.Level;
 import dj.practice.toby.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
@@ -13,6 +15,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -29,20 +32,31 @@ import static org.junit.Assert.assertThat;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="/test-applicationContext.xml")
+@ActiveProfiles("test")
+@ContextConfiguration(classes = AppContext.class)
 @DirtiesContext
 public class UserDaoTest {
     @Autowired
     private ApplicationContext context;
 
     @Autowired
-    private UserDaoJdbc dao;
+    private UserDao dao;
     private User user1;
     private User user2;
     private User user3;
 
     @Autowired
     DataSource dataSource;
+
+//    @Autowired
+//    DefaultListableBeanFactory bf;
+//
+//    @Test
+//    public void beans(){
+//        for(String n: bf.getBeanDefinitionNames()){
+//            System.out.println(n + "\t" + bf.getBean(n).getClass().getName());
+//        }
+//    }
 
     @Before
     public void setUp() {

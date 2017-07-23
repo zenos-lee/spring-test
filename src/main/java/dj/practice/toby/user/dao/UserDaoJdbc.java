@@ -2,6 +2,7 @@ package dj.practice.toby.user.dao;
 
 import dj.practice.toby.user.domain.Level;
 import dj.practice.toby.user.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -11,9 +12,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import dj.practice.toby.user.sqlservice.SqlService;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 /**
  * Created by Dongjoon on 2017. 5. 26..
  */
+@Repository
 public class UserDaoJdbc implements UserDao{
 
     private JdbcTemplate jdbcTemplate;
@@ -33,17 +38,14 @@ public class UserDaoJdbc implements UserDao{
         }
     };
 
-
+    @Autowired
     private SqlService sqlService;
-
-    public void setSqlService(SqlService sqlService) {
-        this.sqlService = sqlService;
-    }
 
     public UserDaoJdbc() {
     }
 
 
+    @Autowired
     public void setDataSource(DataSource dataSource){
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
