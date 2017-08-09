@@ -2,10 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="hello" class="dj.practice.toby.learningtest.spring.ioc.Hello">
+    <bean id="hello" class="dj.practice.toby.learningtest.spring.ioc.bean.Hello">
         <property name="name" value="Parent"/>
         <property name="printer" ref="printer"/>
     </bean>
 
-    <bean id="printer" class="dj.practice.toby.learningtest.spring.ioc.StringPrinter" />
+    <bean id="printer" class="dj.practice.toby.learningtest.spring.ioc.bean.StringPrinter" />
 </beans>

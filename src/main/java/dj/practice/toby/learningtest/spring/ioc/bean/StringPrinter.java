@@ -1,4 +1,4 @@
-package dj.practice.toby.learningtest.spring.ioc;
+package dj.practice.toby.learningtest.spring.ioc.bean;
 
 public class StringPrinter implements Printer {
     private StringBuffer buffer = new StringBuffer();
