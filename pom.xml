@@ -16,6 +16,19 @@
 	</properties>
 	<dependencies>
 
+		<dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>com.springsource.com.ibatis</artifactId>
+			<version>2.3.4.726</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-ibatis -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-ibatis</artifactId>
+			<version>2.0.8</version>
+		</dependency>
+
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
